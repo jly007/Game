@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <title>控制中心</title>
+  <!-- 新 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+  <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+  <script src="../js/jquery.min.js"></script>
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="../js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <h3>
+          当前第 <%= round %> 轮
+      </h3>
+      <h3>
+          当前第 <%= day %> 天
+      </h3>
+      <h3>
+          已选择的总人数为 : <%= pathChooseNumber[0] + pathChooseNumber[1] + pathChooseNumber[2] %>
+      </h3>
+      <h3>
+          第一条路径选择人数：<%= pathChooseNumber[0] %>，走行成本：<%= pathCost[0] %>
+      </h3>
+      <h3>
+          第二条路径选择人数：<%= pathChooseNumber[1] %>，走行成本：<%= pathCost[1] %>
+      </h3>
+      <h3>
+          第三条路径选择人数：<%= pathChooseNumber[2] %>，走行成本：<%= pathCost[2] %>
+      </h3>
+
+  </br>
+
+  <form action='/mastermain', method='get'>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">更新信息</button>
+</form>
+
+</br>
+
+<form action='/masternext', method='get'>
+  <button type="submit" class="btn btn-lg btn-block btn-success">进入下一天</button>
+</form>
+
+</br>
+<form action='/masterinit', method='get'>
+    <button type="submit" class="btn btn-lg btn-block btn-danger">开始新的一轮</button>
+</form>
+
+</div>
+</div>
+
+</br>
+
+<div id="main" style="height:400px"></div>
+
+</div>
+
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+
+$.get("figure", 
+    function(data,status){
+        //alert(data.length);
+        var x_axis = [];
+        var y_axis_one = [];
+        var y_axis_two = [];
+        var y_axis_three = [];
+        for (var i = 0; i < data.length; i++) {
+            x_axis[i] = [i+1];
+            y_axis_one[i] = data[i][0];
+            y_axis_two[i] = data[i][1];
+            y_axis_three[i] = data[i][2];
+        };
+
+
+        // 使用
+        require(['echarts','echarts/chart/line'], function (ec) {
+            var myChart = ec.init(document.getElementById('main')); 
+            option = {
+                title : {
+                    text: '整轮数据总览',
+                    subtext: '走行成本'},
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data:['路径1','路径2','路径3']
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : x_axis
+                    }
+                    ],
+                    yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel : {
+                            formatter: '{value}'
+                        }
+                    }
+                    ],
+                    series : [
+                    {
+                        name:'路径1',
+                        type:'line',
+                        data:y_axis_one,
+                        // markPoint : {
+                        //     data : [
+                        //     {type : 'max', name: '最大值'},
+                        //     {type : 'min', name: '最小值'}
+                        //     ]
+                        // },
+                        // markLine : {
+                        //     data : [
+                        //     {type : 'average', name: '平均值'}
+                        //     ]
+                        // }
+                    },
+                    {
+                        name:'路径2',
+                        type:'line',
+                        data:y_axis_two,
+                        // markPoint : {
+                        //     data : [
+                        //     {name : '周最低', value : 5, xAxis: 2, yAxis: -1.5}
+                        //     ]
+                        // },
+                        // markLine : {
+                        //     data : [
+                        //     {type : 'average', name : '平均值'}
+                        //     ]
+                        // }
+                    },
+                    {
+                        name:'路径3',
+                        type:'line',
+                        data:y_axis_three,
+                        // markPoint : {
+                        //     data : [
+                        //     {name : '周最低', value : 5, xAxis: 2, yAxis: -1.5}
+                        //     ]
+                        // },
+                        // markLine : {
+                        //     data : [
+                        //     {type : 'average', name : '平均值'}
+                        //     ]
+                        // }
+                    }
+                    ]
+                };
+
+                // 为echarts对象加载数据 
+                myChart.setOption(option); 
+            }
+            );
+});
+
+
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+        
+        
+        </script>
+
+    </body>
+    </html>

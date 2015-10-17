@@ -1,0 +1,30 @@
+CREATE DATABASE rce;
+
+CREATE TABLE `users`( id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, usernumber VARCHAR(20) NOT NULL, userphone VARCHAR(20), islogged INT);
+CREATE TABLE `record`( id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, round INT NOT NULL, daynumber INT NOT NULL, routeone INT, routetwo INT, routethree INT);
+CREATE TABLE `detail`(id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT, round INT NOT NULL, usernumber INT UNSIGNED NOT NULL, daynumber INT,route INT);
+
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('1','1','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('2','2','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('3','3','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('4','4','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('5','5','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('6','6','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('7','7','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('8','8','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('9','9','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('10','10','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('11','11','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('12','12','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('13','13','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('14','14','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('15','15','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('16','16','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('17','17','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('18','18','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('19','19','1');
+INSERT INTO `users`(usernumber,userphone,islogged) VALUES ('20','20','1');
+
+INSERT INTO `detail`(round,usernumber,route) VALUES ();
+
+CREATE TABLE `detail`(id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT, round INT NOT NULL, usernumber INT UNSIGNED NOT NULL, route INT,FOREIGN KEY (userid) REFERENCES users(id));
